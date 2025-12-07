@@ -4,7 +4,7 @@ import {
   GestureResponderEvent,
   StyleSheet,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 
 interface ButtonComponentProps {
@@ -34,7 +34,7 @@ export default function ButtonComponent({
       ]}
       onPress={onPress}
       activeOpacity={0.8}
-      disabled={disabled || loading} 
+      disabled={disabled || loading}
       {...buttonProps}
     >
       {loading ? (

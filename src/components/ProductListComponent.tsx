@@ -3,15 +3,30 @@ import { FlatList, View } from "react-native";
 import useProductListController from "./ProductListController";
 import ProductListItemComponent from "./ProductListItemComponent";
 interface ItemProps {
+  id: number;
   title: string;
   image: string;
+  description: string;
+  price: string;
 }
 
 export default function ProduListComponent() {
   const { products } = useProductListController();
 
-  const ListItemComponent = ({ title, image }: ItemProps) => (
-    <ProductListItemComponent title={title} imageUri={image} />
+  const ListItemComponent = ({
+    id,
+    title,
+    image,
+    description,
+    price,
+  }: ItemProps) => (
+    <ProductListItemComponent
+      id={id}
+      title={title}
+      image={image}
+      descroption={description}
+      price={price}
+    />
   );
 
   return (
@@ -22,7 +37,13 @@ export default function ProduListComponent() {
         numColumns={2}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
-          <ListItemComponent title={item.title} image={item.thumbnailUrl} />
+          <ListItemComponent
+            id={item.id}
+            title={item.title}
+            image={item.image}
+            description={item.description}
+            price={item.price}
+          />
         )}
         keyExtractor={(item) => item.id.toString()}
       />

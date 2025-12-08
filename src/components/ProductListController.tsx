@@ -1,25 +1,18 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-
-interface Products {
-  albumId: string;
-  id: string;
-  title: string;
-  url: string;
-  thumbnailUrl: string;
-}
+import { useEffect } from "react";
+import useProductStore from "../store/productStore";
 
 export default function useProductListController() {
-  const [products, setProducts] = useState<Products[]>([]);
+  const { products, setProducts } = useProductStore();
 
   useEffect(() => {
     const fetchAllProducts = async () => {
       try {
         const { data } = await axios.get(
-          "https://jsonplaceholder.typicode.com/albums/1/photos"
+          "https://mockerjson.xyz/api/v1/products"
         );
         if (data) {
-          setProducts(data);
+          setProducts(data.data);
         }
       } catch (error) {
         console.log(error);

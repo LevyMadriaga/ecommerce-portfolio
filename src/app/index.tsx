@@ -11,7 +11,7 @@ export default function LoginScreen() {
   const router = useRouter();
 
   const handleLogin = () => {
-    setLoading(true);
+    setLoading(false);
     router.navigate("./tabs");
   };
 
@@ -30,7 +30,7 @@ export default function LoginScreen() {
       <ButtonComponent
         title="Login"
         onPress={handleLogin}
-        loading={loading}
+        loading={false}
         backgroundColor="#1E90FF"
       />
     </View>

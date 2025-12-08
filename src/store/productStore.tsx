@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 import { ProductItem } from "../types";
 
 interface ProductStore {
@@ -6,9 +7,16 @@ interface ProductStore {
   setProducts: (products: ProductItem[]) => void;
 }
 
-const useProductStore = create<ProductStore>((set) => ({
-  products: [],
-  setProducts: (products) => set({ products }),
-}));
+const useProductStore = create<ProductStore>()(
+  persist(
+    (set) => ({
+      products: [],
+      setProducts: (products) => set({ products }),
+    }),
+    {
+      name: "product-storage",
+    }
+  )
+);
 
 export default useProductStore;

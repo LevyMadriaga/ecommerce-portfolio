@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, View } from "react-native";
+import { ActivityIndicator, FlatList, View } from "react-native";
 import useProductListController from "./ProductListController";
 import ProductListItemComponent from "./ProductListItemComponent";
 interface ItemProps {
@@ -11,7 +11,8 @@ interface ItemProps {
 }
 
 export default function ProduListComponent() {
-  const { products } = useProductListController();
+  const { products, refreshing, refresh, loadMore, loadingMore } =
+    useProductListController();
 
   const ListItemComponent = ({
     id,
@@ -33,9 +34,6 @@ export default function ProduListComponent() {
     <View style={{ paddingHorizontal: 10 }}>
       <FlatList
         data={products}
-        columnWrapperStyle={{ justifyContent: "space-between" }}
-        numColumns={2}
-        showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
           <ListItemComponent
             id={item.id}
@@ -45,7 +43,19 @@ export default function ProduListComponent() {
             price={item.price}
           />
         )}
-        keyExtractor={(item) => item.id.toString()}
+        columnWrapperStyle={{ justifyContent: "space-between" }}
+        numColumns={2}
+        showsVerticalScrollIndicator={false}
+        keyExtractor={(item, index) => `${item.id}-${index}`}
+        refreshing={refreshing}
+        onRefresh={refresh}
+        onEndReached={loadMore}
+        onEndReachedThreshold={0.5}
+        ListFooterComponent={
+          loadingMore ? (
+            <ActivityIndicator style={{ marginVertical: 20 }} />
+          ) : null
+        }
       />
     </View>
   );

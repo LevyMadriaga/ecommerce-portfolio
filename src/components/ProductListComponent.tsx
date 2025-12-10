@@ -25,7 +25,7 @@ export default function ProduListComponent() {
       id={id}
       title={title}
       image={image}
-      descroption={description}
+      description={description}
       price={price}
     />
   );

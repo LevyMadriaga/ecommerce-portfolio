@@ -1,12 +1,12 @@
 import React from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import useProductListItemConmtroller from "./ProductListItemController";
 
 interface ProductListItemComponentProps {
   id: number;
   title: string;
   image: string;
-  descroption: string;
+  description: string;
   price: string;
 }
 
@@ -14,21 +14,19 @@ export default function ProductListItemComponent({
   id,
   title,
   image,
-  descroption,
+  description,
   price,
 }: ProductListItemComponentProps) {
-  const { handlePress } = useProductListItemConmtroller();
-  const splitImage = image.split("/");
+  const { handlePress, splitImage } = useProductListItemConmtroller(image);
+
   return (
-    <View style={{ width: "50%", paddingHorizontal: 8 }}>
+    <View style={styles.conatiner}>
       <TouchableOpacity onPress={() => handlePress(id)}>
         <View
-          style={{
-            width: "100%",
-            backgroundColor: `#${splitImage[splitImage.length - 2]}`,
-            borderRadius: 10,
-            marginBottom: 12,
-          }}
+          style={
+            (styles.listContainer,
+            { backgroundColor: `#${splitImage[splitImage.length - 2]}` })
+          }
         >
           <Image
             source={{
@@ -36,24 +34,33 @@ export default function ProductListItemComponent({
               width: 120,
               height: 120,
             }}
-            style={{
-              width: 120,
-              height: 120,
-              borderRadius: 8,
-            }}
             resizeMode="cover"
           />
         </View>
-        <Text numberOfLines={1} style={{ color: "black" }}>
+        <Text numberOfLines={1} style={styles.contentText}>
           Title: {title}
         </Text>
-        <Text numberOfLines={1} style={{ color: "black" }}>
-          Description: {descroption}
+        <Text numberOfLines={1} style={styles.contentText}>
+          Description: {description}
         </Text>
-        <Text numberOfLines={1} style={{ color: "black" }}>
+        <Text numberOfLines={1} style={styles.contentText}>
           Price: {price}
         </Text>
       </TouchableOpacity>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  conatiner: {
+    width: "50%",
+    paddingHorizontal: 8,
+    marginBottom: 10,
+  },
+  listContainer: {
+    width: "100%",
+    borderRadius: 10,
+    marginBottom: 12,
+  },
+  contentText: { color: "black" },
+});

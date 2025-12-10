@@ -9,6 +9,12 @@ export default function ProductLayout() {
           headerShown: true,
         }}
       />
+      <Stack.Screen
+        name="checkout"
+        options={{
+          headerShown: true,
+        }}
+      />
     </Stack>
   );
 }
